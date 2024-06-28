@@ -1,7 +1,10 @@
 import telegram
 import os
 import asyncio
+import schedule
+import time
 from configparser import ConfigParser
+from dbinit import *
 
 config_dir = os.path.normpath(os.getenv("CONFIG_PATH", f"{os.getcwd()}/config"))
 config = ConfigParser()
@@ -15,11 +18,26 @@ else:
 
 
 
+def message():
+    print("fag")
 
-message = "geny is a stupid nerd2"
 
 
 
-bot = telegram.Bot(token=config.get("telegram","tokenid"))
-asyncio.run(bot.send_message(chat_id=config.get("telegram","chatid"), text=message))
+def checktime():
+    bosstime = nexttime(dbname)
+    print(bosstime)
+
+schedule.every(3).seconds.do(checktime)
+
+
+#print(schedule)
+while True:
+   schedule.run_pending()
+   time.sleep(1)
+
+
+
+#bot = telegram.Bot(token=config.get("telegram","tokenid"))
+#asyncio.run(bot.send_message(chat_id=config.get("telegram","chatid"), text=message))
 
