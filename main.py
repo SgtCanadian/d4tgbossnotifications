@@ -19,14 +19,14 @@ else:
 
 
 def message():
-    print("fag")
+    print("nerd")
 
 
 
 
 def checktime():
     bosstime = nexttime(dbname)
-    print(bosstime)
+    if datetime.datetime.now()
 
 schedule.every(3).seconds.do(checktime)
 
