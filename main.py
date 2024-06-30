@@ -1,8 +1,6 @@
 import telegram
 import os
 import asyncio
-import schedule
-import time
 import datetime
 from configparser import ConfigParser
 from dbinit import *
