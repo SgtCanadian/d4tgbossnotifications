@@ -9,7 +9,6 @@ from apscheduler.schedulers.background import BlockingScheduler
 
 #initialize the db from dbinit.py
 initialize_db()
-
 sched = BlockingScheduler()
 advancewarning = datetime.timedelta(minutes=15)
 config_dir = os.path.normpath(os.getenv("CONFIG_PATH", f"{os.getcwd()}/config"))
@@ -24,9 +23,8 @@ else:
     config.set("telegram", "tokenid", "")
 
 def message():
-    print("nerd")
-    bot = telegram.Bot(token=config.get("telegram","tokenid"))
-    asyncio.run(bot.send_message(chat_id=config.get("telegram","chatid"), text="15 Minute Warning"))
+    bot = telegram.Bot(token=os.getenv("TELEGRAM_TOKEN", config.get("telegram", "tokenid")))
+    asyncio.run(bot.send_message(chat_id=os.getenv("TELEGRAM_CHATID", config.get("telegram", "chatid")), text="Boss in 15 mins!"))
     
 
 with sqlite3.connect(dbname) as conn:
