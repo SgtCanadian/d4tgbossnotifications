@@ -4,12 +4,13 @@ import asyncio
 import datetime
 from configparser import ConfigParser
 from dbinit import *
-from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.background import BlockingScheduler
 
+print(datetime.datetime.now())
 
 #initialize the db from dbinit.py
 initialize_db()
-sched = BackgroundScheduler()
+sched = BlockingScheduler()
 advancewarning = datetime.timedelta(minutes=15)
 config_dir = os.path.normpath(os.getenv("CONFIG_PATH", f"{os.getcwd()}/config"))
 config = ConfigParser()
