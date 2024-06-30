@@ -4,12 +4,12 @@ import asyncio
 import datetime
 from configparser import ConfigParser
 from dbinit import *
-from apscheduler.schedulers.background import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 #initialize the db from dbinit.py
 initialize_db()
-sched = BlockingScheduler()
+sched = BackgroundScheduler()
 advancewarning = datetime.timedelta(minutes=15)
 config_dir = os.path.normpath(os.getenv("CONFIG_PATH", f"{os.getcwd()}/config"))
 config = ConfigParser()
@@ -24,7 +24,6 @@ else:
     config.add_section("debug")
     config.set("debug","enabled", "")
 
-print(datetime.datetime.now())
 
 if os.getenv("DEBUG_ENABLED", config.get("debug","enabled")) == 'True':
     bot = telegram.Bot(token=os.getenv("TELEGRAM_TOKEN", config.get("telegram", "tokenid")))
@@ -38,22 +37,23 @@ def message():
 with sqlite3.connect(dbname) as conn:
     cursor = conn.cursor()
     past()
-    cursor.execute("select time from bosstimer where happened = 0")
+    cursor.execute("select time from bosstimer where happened = 0 limit 5")
     cursor.row_factory = None
     rows = cursor.fetchall()
     for row in rows:
         bosstime = datetime.datetime.strptime(row[0], '%Y-%m-%d %H:%M:%S')
         if bosstime.weekday() >= 0 and bosstime.weekday() <= 4:
             if bosstime.hour >= 6 and bosstime.hour <= 22:
-                sched.add_job(message, 'date', run_date = bosstime)
+                sched.add_job(message, 'date', run_date = bosstime - advancewarning)
             else:
                 pass
         else:
             if bosstime.hour >= 8 and bosstime.hour <= 23:
-                sched.add_job(message, 'date', run_date = bosstime)
+                sched.add_job(message, 'date', run_date = bosstime - advancewarning)
             else:
                 pass
 sched.start()
+
 
 
 
