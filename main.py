@@ -24,7 +24,7 @@ else:
     config.add_section("debug")
     config.set("debug","enabled", "")
 
-print(currenttime = datetime.datetime.now())
+print(datetime.datetime.now())
 
 if os.getenv("DEBUG_ENABLED", config.get("debug","enabled")) == 'True':
     bot = telegram.Bot(token=os.getenv("TELEGRAM_TOKEN", config.get("telegram", "tokenid")))
