@@ -17,7 +17,7 @@ def initialize_db():
     try:
         with sqlite3.connect(dbname) as conn:
             cursor = conn.cursor()
-            cursor.execute(sql_statements)
+            cursor.execute(sql_statpipements)
             conn.commit()
     except sqlite3.Error as e:
         print(e)
