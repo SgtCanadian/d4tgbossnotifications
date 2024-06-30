@@ -24,7 +24,7 @@ else:
     config.add_section("debug")
     config.set("debug","enabled", "")
 
-if os.getenv("DEBUG_ENABLED", config.get("debug","enabled")) == True:
+if os.getenv("DEBUG_ENABLED", config.get("debug","enabled")) == 'True':
     bot = telegram.Bot(token=os.getenv("TELEGRAM_TOKEN", config.get("telegram", "tokenid")))
     asyncio.run(bot.send_message(chat_id=os.getenv("TELEGRAM_CHATID", config.get("telegram", "chatid")), text="Test TG Message"))
 
