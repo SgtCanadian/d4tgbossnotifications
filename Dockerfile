@@ -1,5 +1,6 @@
 FROM python:3.10.14-alpine
 
+ENV CONFIG_PATH /config
 ENV TELEGRAM_TOKEN _
 ENV TELEGRAM_CHATID _
 
