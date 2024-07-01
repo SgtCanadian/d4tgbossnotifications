@@ -38,7 +38,7 @@ def message():
 with sqlite3.connect(dbname) as conn:
     cursor = conn.cursor()
     past()
-    cursor.execute("select time from bosstimer where happened = 0 limit 5")
+    cursor.execute("select time from bosstimer where happened = 0")
     cursor.row_factory = None
     rows = cursor.fetchall()
     for row in rows:
